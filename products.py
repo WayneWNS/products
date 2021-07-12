@@ -1,5 +1,14 @@
-# 二維清單 = 清單之中包含清單
+# 讀取檔案
 products = []
+with open('products.csv', 'r', encoding = 'utf-8') as f:
+	for line in f:
+		name, price = line.strip().split(',')
+		products.append([name, price])
+print(products)
+
+
+# 二維清單 = 清單之中包含清單
+
 while True:
 	name = input('請輸入商品名稱: ')
 	if name == 'q':
