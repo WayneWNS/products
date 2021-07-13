@@ -1,13 +1,18 @@
+import os # operating system 作業系統模組
+
 # 讀取檔案
 products = []
-with open('products.csv', 'r', encoding = 'utf-8') as f:
-	for line in f:
-		if '商品,價格' in line:
-			continue # 繼續；與break一樣，只能寫在迴圈裡。意思是不中斷當前迴圈跳到下一迴(等於7、8行的程式不執行)
-		name, price = line.strip().split(',')
-		products.append([name, price])
-print(products)
-
+if os.path.isfile('products.csv'): # 檢查檔案在不在
+	print('已存在檔案!')
+	with open('products.csv', 'r', encoding = 'utf-8') as f:
+		for line in f:
+			if '商品,價格' in line:
+				continue # 繼續；與break一樣，只能寫在迴圈裡。意思是不中斷當前迴圈跳到下一迴(等於7、8行的程式不執行)
+			name, price = line.strip().split(',')
+			products.append([name, price])
+	print(products)
+else:
+	print('未有紀錄。')
 
 # 二維清單 = 清單之中包含清單
 # 讓使用者輸入
