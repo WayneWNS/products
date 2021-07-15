@@ -1,22 +1,18 @@
 import os # operating system 作業系統模組
 
+
+#理想的function只做一件事。 refactor(重構程式)的核心概念，就是把程式碼不斷改寫成越來越小的function，讓function"盡量"只做一件事。
 # 讀取檔案
 def read_file(filename):
     products = []
-    if os.path.isfile(filename): # 檢查檔案在不在
-        print('已存在檔案!')
-        with open(filename, 'r', encoding = 'utf-8') as f:
-            for line in f:
-                if '商品,價格' in line:
-                    continue # 繼續；與break一樣，只能寫在迴圈裡。意思是不中斷當前迴圈跳到下一迴(等於7、8行的程式不執行)
-                name, price = line.strip().split(',')
-                products.append([name, price])
-        print(products)
-    else:
-        print('未有紀錄。')
+    with open(filename, 'r', encoding = 'utf-8') as f:
+        for line in f:
+            if '商品,價格' in line:
+                continue # 繼續
+            name, price = line.strip().split(',')
+            products.append([name, price])
     return products
 
-# 二維清單 = 清單之中包含清單
 # 讓使用者輸入
 def user_input(products):
     while True:
@@ -40,7 +36,18 @@ def write_file(filename, products):
         for p in products:
             f.write(p[0] + ',' + p[1] + '\n') # f.write 才是真正的寫入
 
-products = read_file('products.csv')
-products = user_input(products)
-print_products(products)
-write_file(filename, products)
+def main(): # 程式最好有一個main() function 為程式的進入點
+    filename = 'products.csv'
+    if os.path.isfile(filename): # 檢查檔案在不在; 
+        print('已存在檔案!')
+        products = read_file(filename)
+    else:
+        print('未有紀錄。')
+
+    products = user_input(products)
+    print_products(products)
+    write_file(filename, products)
+
+main()
+
+# refactor 重構
